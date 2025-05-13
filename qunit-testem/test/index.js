@@ -26,7 +26,7 @@ module('waitForAnimation', function (hooks) {
   test('waits for css animations', async function (assert) {
     assert.expect(0);
 
-    const AMOUNT = 7;
+    const AMOUNT = 8;
 
     // assert.timeout(AMOUNT * 1000);
 
