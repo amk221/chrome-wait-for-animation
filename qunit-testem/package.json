@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "start": "testem",
+    "test": "testem ci"
+  },
+  "devDependencies": {
+    "qunit": "^2.20.0",
+    "testem": "^3.16.0"
+  }
+}

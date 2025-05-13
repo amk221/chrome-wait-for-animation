@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title></title>
+    <style>
+      #test-element {
+        position: absolute;
+        background-color: blue;
+        width: 100px;
+        height: 100px;
+        animation-duration: 500ms;
+        animation-fill-mode: forwards;
+      }
+
+      .animate {
+        animation-name: move-right;
+      }
+
+      @keyframes move-right {
+        from {
+          margin-left: 0;
+        }
+
+        to {
+          margin-left: 100px;
+        }
+      }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qunit/2.24.1/qunit.min.js"></script>
+  </head>
+  <body>
+    <script>
+      function waitForAnimation(element) {
+        return Promise.allSettled(
+          element.getAnimations().map((animation) => animation.finished)
+        );
+      }
+
+      let element;
+
+      async function animate(i) {
+        element?.remove();
+
+        element = document.createElement('div');
+        element.setAttribute('id', 'test-element');
+        document.body.appendChild(element);
+        element.classList.add('animate');
+
+        console.log('>>>>>>>>>> animating...', i);
+        await waitForAnimation(element);
+        console.log('>>>>>>>>>> finished', i);
+      }
+
+      QUnit.test('waits for css animations', async function (assert) {
+        const AMOUNT = 7;
+
+        assert.timeout(AMOUNT * 1000);
+
+        for (let i = 0; i < AMOUNT; i++) {
+          await animate(i);
+        }
+      });
+    </script>
+  </body>
+</html>
